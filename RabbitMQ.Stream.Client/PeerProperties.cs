@@ -34,8 +34,9 @@ namespace RabbitMQ.Stream.Client
             }
         }
 
-        public int Write(Span<byte> span)
+        public int Write(IBufferWriter<byte> writer)
         {
+            var span = writer.GetSpan(SizeNeeded);
             var command = (ICommand)this;
             var offset = WireFormatting.WriteUInt16(span, Key);
             offset += WireFormatting.WriteUInt16(span.Slice(offset), command.Version);
@@ -48,6 +49,7 @@ namespace RabbitMQ.Stream.Client
                 offset += WireFormatting.WriteString(span.Slice(offset), v);
             }
 
+            writer.Advance(offset);
             return offset;
         }
     }
@@ -94,7 +96,7 @@ namespace RabbitMQ.Stream.Client
             return offset;
         }
 
-        public int Write(Span<byte> span)
+        public int Write(IBufferWriter<byte> writer)
         {
             throw new NotImplementedException();
         }

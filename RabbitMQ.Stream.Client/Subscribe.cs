@@ -122,7 +122,7 @@ namespace RabbitMQ.Stream.Client
 
         public ResponseCode ResponseCode => responseCode;
 
-        public int Write(Span<byte> span)
+        public int Write(IBufferWriter<byte> writer)
         {
             throw new NotImplementedException();
         }
@@ -179,8 +179,9 @@ namespace RabbitMQ.Stream.Client
             }
         }
 
-        public int Write(Span<byte> span)
+        public int Write(IBufferWriter<byte> writer)
         {
+            var span = writer.GetSpan(SizeNeeded);
             var offset = WireFormatting.WriteUInt16(span, Key);
             offset += WireFormatting.WriteUInt16(span.Slice(offset), ((ICommand)this).Version);
             offset += WireFormatting.WriteUInt32(span.Slice(offset), correlationId);
@@ -198,6 +199,7 @@ namespace RabbitMQ.Stream.Client
                 }
             }
 
+            writer.Advance(offset);
             return offset;
         }
     }

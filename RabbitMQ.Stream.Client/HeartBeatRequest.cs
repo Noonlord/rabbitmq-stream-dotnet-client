@@ -16,7 +16,7 @@ internal readonly struct HeartBeatRequest : ICommand
     {
         var span = writer.GetSpan(SizeNeeded);
         var offset = WireFormatting.WriteUInt16(span, Key);
-        offset += WireFormatting.WriteUInt16(span.Slice(offset), ((ICommand)this).Version);
+        offset += WireFormatting.WriteUInt16(span[offset..], ((ICommand)this).Version);
         writer.Advance(offset);
         return offset;
     }

@@ -24,10 +24,10 @@ namespace RabbitMQ.Stream.Client
         {
             var span = writer.GetSpan(SizeNeeded);
             var offset = WireFormatting.WriteUInt16(span, Key);
-            offset += WireFormatting.WriteUInt16(span.Slice(offset), ((ICommand)this).Version);
-            offset += WireFormatting.WriteUInt32(span.Slice(offset), correlationId);
-            offset += WireFormatting.WriteUInt16(span.Slice(offset), 1); //ok code
-            offset += WireFormatting.WriteString(span.Slice(offset), reason);
+            offset += WireFormatting.WriteUInt16(span[offset..], ((ICommand)this).Version);
+            offset += WireFormatting.WriteUInt32(span[offset..], correlationId);
+            offset += WireFormatting.WriteUInt16(span[offset..], 1); //ok code
+            offset += WireFormatting.WriteString(span[offset..], reason);
             writer.Advance(offset);
             return offset;
         }

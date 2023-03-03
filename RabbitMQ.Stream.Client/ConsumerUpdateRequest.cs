@@ -31,10 +31,10 @@ internal readonly struct ConsumerUpdateRequest : ICommand
     {
         var span = writer.GetSpan(SizeNeeded);
         var offset = WireFormatting.WriteUInt16(span, Key);
-        offset += WireFormatting.WriteUInt16(span.Slice(offset), ((ICommand)this).Version);
-        offset += WireFormatting.WriteUInt32(span.Slice(offset), _correlationId);
-        offset += WireFormatting.WriteUInt16(span.Slice(offset), (ushort)ResponseCode.Ok);
-        offset += OffsetSpecification.Write(span.Slice(offset));
+        offset += WireFormatting.WriteUInt16(span[offset..], ((ICommand)this).Version);
+        offset += WireFormatting.WriteUInt32(span[offset..], _correlationId);
+        offset += WireFormatting.WriteUInt16(span[offset..], (ushort)ResponseCode.Ok);
+        offset += OffsetSpecification.Write(span[offset..]);
         writer.Advance(offset);
         return offset;
     }

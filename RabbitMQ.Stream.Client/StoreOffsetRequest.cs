@@ -28,10 +28,10 @@ namespace RabbitMQ.Stream.Client
             var span = writer.GetSpan(SizeNeeded);
             var command = (ICommand)this;
             var offset = WireFormatting.WriteUInt16(span, Key);
-            offset += WireFormatting.WriteUInt16(span.Slice(offset), command.Version);
-            offset += WireFormatting.WriteString(span.Slice(offset), reference);
-            offset += WireFormatting.WriteString(span.Slice(offset), stream);
-            offset += WireFormatting.WriteUInt64(span.Slice(offset), offsetValue);
+            offset += WireFormatting.WriteUInt16(span[offset..], command.Version);
+            offset += WireFormatting.WriteString(span[offset..], reference);
+            offset += WireFormatting.WriteString(span[offset..], stream);
+            offset += WireFormatting.WriteUInt64(span[offset..], offsetValue);
             writer.Advance(offset);
             return offset;
         }

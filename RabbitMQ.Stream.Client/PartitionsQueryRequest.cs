@@ -27,9 +27,9 @@ internal struct PartitionsQueryRequest : ICommand
         var span = writer.GetSpan(SizeNeeded);
         var command = (ICommand)this;
         var offset = WireFormatting.WriteUInt16(span, key);
-        offset += WireFormatting.WriteUInt16(span.Slice(offset), command.Version);
-        offset += WireFormatting.WriteUInt32(span.Slice(offset), _correlationId);
-        offset += WireFormatting.WriteString(span.Slice(offset), _superStream);
+        offset += WireFormatting.WriteUInt16(span[offset..], command.Version);
+        offset += WireFormatting.WriteUInt32(span[offset..], _correlationId);
+        offset += WireFormatting.WriteString(span[offset..], _superStream);
         writer.Advance(offset);
         return offset;
     }

@@ -59,9 +59,9 @@ namespace RabbitMQ.Stream.Client
         {
             var span = writer.GetSpan(SizeNeeded);
             var offset = WireFormatting.WriteUInt16(span, Key);
-            offset += WireFormatting.WriteUInt16(span.Slice(offset), ((ICommand)this).Version);
-            offset += WireFormatting.WriteUInt32(span.Slice(offset), correlationId);
-            offset += WireFormatting.WriteByte(span.Slice(offset), subscriptionId);
+            offset += WireFormatting.WriteUInt16(span[offset..], ((ICommand)this).Version);
+            offset += WireFormatting.WriteUInt32(span[offset..], correlationId);
+            offset += WireFormatting.WriteByte(span[offset..], subscriptionId);
             writer.Advance(offset);
             return offset;
         }

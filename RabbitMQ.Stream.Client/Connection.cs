@@ -116,7 +116,7 @@ namespace RabbitMQ.Stream.Client
                     else
                     {
                         release = false;
-                        return AwaitFlushAndRelease(flush);
+                        return AwaitFlushThenRelease(flush);
                     }
                 }
                 finally
@@ -152,7 +152,7 @@ namespace RabbitMQ.Stream.Client
             return true;
         }
 
-        private async ValueTask<bool> AwaitFlushAndRelease(ValueTask<FlushResult> task)
+        private async ValueTask<bool> AwaitFlushThenRelease(ValueTask<FlushResult> task)
         {
             try
             {
@@ -205,7 +205,6 @@ namespace RabbitMQ.Stream.Client
                     while (TryReadFrame(ref buffer, out var frame))
                     {
                         // Let's rent some memory to copy the frame from the network stream. This memory will be reclaimed once the frame has been handled.
-
                         var memory =
                             ArrayPool<byte>.Shared.Rent((int)frame.Length).AsMemory(0, (int)frame.Length);
                         frame.CopyTo(memory.Span);

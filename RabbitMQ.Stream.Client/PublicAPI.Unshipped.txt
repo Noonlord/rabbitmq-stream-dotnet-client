@@ -50,4 +50,3 @@ static RabbitMQ.Stream.Client.Message.From(ref System.Buffers.ReadOnlySequence<b
 static RabbitMQ.Stream.Client.Reliable.DeduplicatingProducer.Create(RabbitMQ.Stream.Client.Reliable.DeduplicatingProducerConfig producerConfig, Microsoft.Extensions.Logging.ILogger<RabbitMQ.Stream.Client.Reliable.Producer> logger = null) -> System.Threading.Tasks.Task<RabbitMQ.Stream.Client.Reliable.DeduplicatingProducer>
 RabbitMQ.Stream.Client.SubscribeResponse.Write(System.Buffers.IBufferWriter<byte> writer) -> int
 RabbitMQ.Stream.Client.UnsubscribeResponse.Write(System.Buffers.IBufferWriter<byte> writer) -> int
-static RabbitMQ.Stream.Client.Reliable.DeduplicatingProducer.Create(RabbitMQ.Stream.Client.Reliable.DeduplicatingProducerConfig producerConfig, Microsoft.Extensions.Logging.ILogger<RabbitMQ.Stream.Client.Reliable.Producer> logger = null) -> System.Threading.Tasks.Task<RabbitMQ.Stream.Client.Reliable.DeduplicatingProducer>
